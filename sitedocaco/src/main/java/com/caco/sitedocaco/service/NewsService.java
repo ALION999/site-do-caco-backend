@@ -47,6 +47,17 @@ public class NewsService {
                 .orElseThrow(() -> new ResourceNotFoundException("Notícia não encontrada: " + slug));
     }
 
+    @Transactional(readOnly = true)
+    public Page<NewsSummaryDTO> getNewsByAuthor(UUID authorId, Pageable pageable) {
+        return newsRepository.findAllByAuthor(authorId, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public NewsDetailDTO getNewsBySlugAndAuthor(String slug, UUID authorId) {
+        return newsRepository.findBySlugAndAuthor(slug, authorId)
+                .orElseThrow(() -> new ResourceNotFoundException("Notícia não encontrada ou você não é o autor"));
+    }
+
     @Transactional
     public NewsDetailDTO createNews(CreateNewsDTO dto, UUID authorId) throws IOException {
         User author = userRepository.findById(authorId)

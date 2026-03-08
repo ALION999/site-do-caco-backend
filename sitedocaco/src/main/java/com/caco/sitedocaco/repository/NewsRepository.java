@@ -31,4 +31,16 @@ public interface NewsRepository extends JpaRepository<News, UUID> {
             "n.id, n.title, n.slug, n.summary, n.content, n.coverImage, n.publishDate) " +
             "FROM News n WHERE n.slug = :slug")
     Optional<NewsDetailDTO> findDetailBySlug(@Param("slug") String slug);
+
+    // Get all news summaries by author, paginated
+    @Query("SELECT new com.caco.sitedocaco.dto.response.NewsSummaryDTO(" +
+            "n.id, n.title, n.slug, n.summary, n.coverImage, n.publishDate) " +
+            "FROM News n WHERE n.author.id = :authorId ORDER BY n.publishDate DESC")
+    Page<NewsSummaryDTO> findAllByAuthor(@Param("authorId") UUID authorId, Pageable pageable);
+
+    // Get full news detail by slug and author (for permission check)
+    @Query("SELECT new com.caco.sitedocaco.dto.response.NewsDetailDTO(" +
+            "n.id, n.title, n.slug, n.summary, n.content, n.coverImage, n.publishDate) " +
+            "FROM News n WHERE n.slug = :slug AND n.author.id = :authorId")
+    Optional<NewsDetailDTO> findBySlugAndAuthor(@Param("slug") String slug, @Param("authorId") UUID authorId);
 }
