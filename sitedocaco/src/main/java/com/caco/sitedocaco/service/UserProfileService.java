@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -64,6 +65,16 @@ public class UserProfileService {
         UserProfile profile = userProfileRepository.findByUser(currentUser)
                 .orElseThrow(() -> new ResourceNotFoundException("Formulário ainda não respondido."));
         return UserProfileResponse.fromEntity(profile);
+    }
+
+    /**
+     * Retorna o perfil do usuário logado como Optional (sem lançar exceção).
+     * Usado internamente para enriquecer outros DTOs.
+     */
+    @Transactional(readOnly = true)
+    public Optional<UserProfile> findMyProfile() {
+        User currentUser = getCurrentUser();
+        return userProfileRepository.findByUser(currentUser);
     }
 
     // ── helpers ───────────────────────────────────────────────────────────────

@@ -9,6 +9,8 @@ import com.caco.sitedocaco.exception.BusinessRuleException;
 import com.caco.sitedocaco.exception.ResourceNotFoundException;
 import com.caco.sitedocaco.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,6 +28,10 @@ public class UserService {
     private final UserRepository userRepository;
     private final ImgBBService imgBBService;
 
+    @Lazy
+    @Autowired
+    private WhatsAppGroupService whatsAppGroupService;
+
     /**
      * Pega o e-mail do Token JWT (via SecurityContext) e busca o usuário no banco.
      */
@@ -36,7 +42,8 @@ public class UserService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário logado não encontrado no banco."));
 
-        return UserResponseDTO.fromEntity(user);
+        String whatsappLink = whatsAppGroupService.getWhatsAppLinkForCurrentUser();
+        return UserResponseDTO.fromEntity(user, whatsappLink);
     }
 
     /**

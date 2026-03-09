@@ -13,7 +13,8 @@ public record UserResponseDTO(
         String avatarUrl,
         Role role,
         boolean suspended,
-        LocalDateTime createdAt
+        LocalDateTime createdAt,
+        String whatsappGroupLink
 ) {
     public static UserResponseDTO fromEntity(User user) {
         return new UserResponseDTO(
@@ -23,8 +24,24 @@ public record UserResponseDTO(
                 user.getAvatarUrl(),
                 user.getRole(),
                 user.isSuspended(),
-                user.getCreatedAt()
+                user.getCreatedAt(),
+                null
+        );
+    }
+
+    public static UserResponseDTO fromEntity(User user, String whatsappGroupLink) {
+        return new UserResponseDTO(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getAvatarUrl(),
+                user.getRole(),
+                user.isSuspended(),
+                user.getCreatedAt(),
+                whatsappGroupLink
         );
     }
 }
+
+
 
