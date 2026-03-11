@@ -53,17 +53,17 @@ public class SecurityConfig {
                 // 4. Regras de Autorização de URL
                 .authorizeHttpRequests(auth -> auth
                         // Rotas Públicas
-                        .requestMatchers("/api/public/**").permitAll()
+                        .requestMatchers("/public/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll() // Docs
 
                         // Rotas Admin (Super Admin também tem acesso)
-                        .requestMatchers("/api/admin/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
+                        .requestMatchers("/admin/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
 
                         // Rotas Editor (também acessíveis por Admin e Super Admin)
-                        .requestMatchers("/api/editor/**").hasAnyRole("EDITOR", "ADMIN", "SUPER_ADMIN")
+                        .requestMatchers("/editor/**").hasAnyRole("EDITOR", "ADMIN", "SUPER_ADMIN")
 
                         // Rotas Super Admin
-                        .requestMatchers("/api/super-admin/**").hasRole("SUPER_ADMIN")
+                        .requestMatchers("/super-admin/**").hasRole("SUPER_ADMIN")
 
                         .anyRequest().authenticated()
                 )
