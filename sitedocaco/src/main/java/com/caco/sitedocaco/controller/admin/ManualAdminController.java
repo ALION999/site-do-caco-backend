@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/admin/manual")
+@RequestMapping("/admin/manual")
 @RequiredArgsConstructor
 @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
 @RateLimit(capacity = 30, refillTokens = 30, refillPeriod = 1)
@@ -37,7 +37,7 @@ public class ManualAdminController {
         var created = categoryService.createCategory(dto);
         var dtoResponse = ManualCategoryDTO.fromEntity(created, 0L); // 0 chapters inicialmente
         return ResponseEntity
-                .created(URI.create("/api/public/manual/categories/" + created.getSlug()))
+                .created(URI.create("/public/manual/categories/" + created.getSlug()))
                 .body(dtoResponse);
     }
 
@@ -71,7 +71,7 @@ public class ManualAdminController {
         Long articleCount = articleService.countArticlesByChapter(created.getId()); // 0 articles inicialmente
         var dtoResponse = ManualChapterDTO.fromEntity(created, articleCount);
         return ResponseEntity
-                .created(URI.create("/api/public/manual/chapters/" + created.getSlug()))
+                .created(URI.create("/public/manual/chapters/" + created.getSlug()))
                 .body(dtoResponse);
     }
 
@@ -104,7 +104,7 @@ public class ManualAdminController {
         var created = articleService.createArticle(dto);
         var dtoResponse = ManualArticleDTO.fromEntity(created, 0L, 0L); // 0 feedbacks inicialmente
         return ResponseEntity
-                .created(URI.create("/api/public/manual/articles/" + created.getSlug()))
+                .created(URI.create("/public/manual/articles/" + created.getSlug()))
                 .body(dtoResponse);
     }
 

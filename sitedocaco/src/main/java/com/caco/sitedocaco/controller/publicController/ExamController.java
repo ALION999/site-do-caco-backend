@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/public/exams")
+@RequestMapping("/public/exams")
 @RequiredArgsConstructor
 @RateLimit(capacity = 30, refillTokens = 30, refillPeriod = 1)
 public class ExamController {

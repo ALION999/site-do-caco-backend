@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/admin/whatsapp-groups")
+@RequestMapping("/admin/whatsapp-groups")
 @RequiredArgsConstructor
 @RateLimit(capacity = 30, refillTokens = 30)
 @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
@@ -46,4 +46,3 @@ public class WhatsAppGroupAdminController {
         return ResponseEntity.noContent().build();
     }
 }
-

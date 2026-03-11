@@ -15,7 +15,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/admin/orders")
+@RequestMapping("/admin/orders")
 @RequiredArgsConstructor
 @RateLimit(capacity = 30, refillTokens = 30)
 public class OrderAdminController {

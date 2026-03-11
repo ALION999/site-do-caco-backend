@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/public/manual")
+@RequestMapping("/public/manual")
 @RequiredArgsConstructor
 @RateLimit
 public class ManualController {

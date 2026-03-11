@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/super-admin/users")
+@RequestMapping("/super-admin/users")
 @RequiredArgsConstructor
 @PreAuthorize("hasRole('SUPER_ADMIN')")
 @RateLimit(capacity = 30, refillTokens = 30)
@@ -80,4 +80,3 @@ public class SuperAdminController {
         return ResponseEntity.ok(userService.unsuspendUser(userId));
     }
 }
-

@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/api/admin/images")
+@RequestMapping("/admin/images")
 @RequiredArgsConstructor
 @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
 // Upload de imagem: consome bandwidth real do ImgBB — limite bastante conservador

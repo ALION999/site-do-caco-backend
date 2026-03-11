@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/admin/store")
+@RequestMapping("/admin/store")
 @RequiredArgsConstructor
 @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
 @RateLimit(capacity = 30, refillTokens = 30)

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/public/stickers")
+@RequestMapping("/public/stickers")
 @RequiredArgsConstructor
 @RateLimit
 public class StickerController {

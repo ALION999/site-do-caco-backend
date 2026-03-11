@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/admin/exams")
+@RequestMapping("/admin/exams")
 @RequiredArgsConstructor
 @RateLimit(capacity = 30, refillTokens = 30)
 @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")

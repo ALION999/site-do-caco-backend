@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/admin/events")
+@RequestMapping("/admin/events")
 @RequiredArgsConstructor
 @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
 @RateLimit(capacity = 30, refillTokens = 30)

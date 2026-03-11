@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/public/news")
+@RequestMapping("/public/news")
 @RequiredArgsConstructor
 @RateLimit
 public class NewsController {

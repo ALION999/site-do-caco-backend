@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/user/stickers")
+@RequestMapping("/user/stickers")
 @RequiredArgsConstructor
 @RateLimit
 public class UserStickerController {
@@ -37,4 +37,3 @@ public class UserStickerController {
         return ResponseEntity.ok(userStickerService.myStickers(pageable));
     }
 }
-

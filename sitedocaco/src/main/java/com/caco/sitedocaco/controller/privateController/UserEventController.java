@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/private/user/events")
+@RequestMapping("/private/user/events")
 @RequiredArgsConstructor
 @PreAuthorize("isAuthenticated()")
 @RateLimit

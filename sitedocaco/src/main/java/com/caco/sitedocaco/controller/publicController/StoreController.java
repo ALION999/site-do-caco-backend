@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/public/store")
+@RequestMapping("/public/store")
 @RequiredArgsConstructor
 @RateLimit
 public class StoreController {

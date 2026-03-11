@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/user/profile-form")
+@RequestMapping("/user/profile-form")
 @RequiredArgsConstructor
 @RateLimit(capacity = 30, refillTokens = 30)
 public class UserProfileController {
@@ -19,7 +19,7 @@ public class UserProfileController {
     private final UserProfileService userProfileService;
 
     /**
-     * POST /api/user/profile-form
+     * POST /user/profile-form
      * Submete o formulário de perfil. Só pode ser feito uma vez.
      */
     // Formulário de perfil: ação única e sensível — limite bastante conservador
@@ -30,7 +30,7 @@ public class UserProfileController {
     }
 
     /**
-     * GET /api/user/profile-form
+     * GET /user/profile-form
      * Retorna as respostas do formulário do usuário logado.
      */
     @GetMapping

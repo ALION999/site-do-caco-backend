@@ -23,7 +23,7 @@ import java.net.URI;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/admin/news")
+@RequestMapping("/admin/news")
 @RequiredArgsConstructor
 @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
 @RateLimit(capacity = 30, refillTokens = 30)
@@ -50,7 +50,7 @@ public class NewsAdminController {
             @ModelAttribute @Valid CreateNewsDTO dto) throws IOException {
         UUID userId = userService.getCurrentUser().getId();
         NewsDetailDTO created = newsService.createNews(dto, userId);
-        return ResponseEntity.created(URI.create("/api/public/news/" + created.slug())).body(created);
+        return ResponseEntity.created(URI.create("/public/news/" + created.slug())).body(created);
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -66,4 +66,3 @@ public class NewsAdminController {
         return ResponseEntity.noContent().build();
     }
 }
-

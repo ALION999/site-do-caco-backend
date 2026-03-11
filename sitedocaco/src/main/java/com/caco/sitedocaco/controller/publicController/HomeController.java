@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/public/home")
+@RequestMapping("/public/home")
 @RequiredArgsConstructor
 @RateLimit
 public class HomeController {

@@ -19,7 +19,7 @@ import java.time.YearMonth;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/public/events")
+@RequestMapping("/public/events")
 @RequiredArgsConstructor
 @RateLimit
 public class EventController {

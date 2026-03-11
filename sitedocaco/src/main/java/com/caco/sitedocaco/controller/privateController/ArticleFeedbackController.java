@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/article-feedback")
+@RequestMapping("/article-feedback")
 @RequiredArgsConstructor
 public class ArticleFeedbackController {
     private final ManualArticleService articleService;

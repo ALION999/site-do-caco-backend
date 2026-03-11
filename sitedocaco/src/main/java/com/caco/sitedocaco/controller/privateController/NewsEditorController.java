@@ -22,7 +22,7 @@ import java.net.URI;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/editor/news")
+@RequestMapping("/editor/news")
 @RequiredArgsConstructor
 @PreAuthorize("hasRole('EDITOR')")
 @RateLimit(capacity = 20, refillTokens = 20)
@@ -51,7 +51,7 @@ public class NewsEditorController {
             @ModelAttribute @Valid CreateNewsDTO dto) throws IOException {
         UUID userId = userService.getCurrentUser().getId();
         NewsDetailDTO created = newsService.createNews(dto, userId);
-        return ResponseEntity.created(URI.create("/api/public/news/" + created.slug())).body(created);
+        return ResponseEntity.created(URI.create("/public/news/" + created.slug())).body(created);
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -69,4 +69,3 @@ public class NewsEditorController {
         return ResponseEntity.noContent().build();
     }
 }
-
