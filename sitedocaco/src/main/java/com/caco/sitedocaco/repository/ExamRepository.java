@@ -24,4 +24,9 @@ public interface ExamRepository extends JpaRepository<Exam, UUID> {
     @Modifying
     @Query("DELETE FROM Exam e WHERE e.subject.subjectCode = :subjectCode")
     void deleteBySubjectSubjectCode(@Param("subjectCode") String subjectCode);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Exam e SET e.professor = null WHERE e.professor.id = :professorId")
+    void removeProfessorFromExams(@Param("professorId") UUID professorId);
 }

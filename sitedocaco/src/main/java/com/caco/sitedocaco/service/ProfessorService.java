@@ -5,6 +5,7 @@ import com.caco.sitedocaco.dto.request.UpdateProfessorDTO;
 import com.caco.sitedocaco.entity.exam.Professor;
 import com.caco.sitedocaco.exception.BusinessRuleException;
 import com.caco.sitedocaco.exception.ResourceNotFoundException;
+import com.caco.sitedocaco.repository.ExamRepository;
 import com.caco.sitedocaco.repository.ProfessorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import java.util.UUID;
 public class ProfessorService {
 
     private final ProfessorRepository professorRepository;
+    private final ExamRepository examRepository;
 
     @Transactional
     public Professor createProfessor(CreateProfessorDTO dto) {
@@ -59,7 +61,11 @@ public class ProfessorService {
     @Transactional
     public void deleteProfessor(UUID id) {
         Professor professor = getProfessorById(id);
+        examRepository.removeProfessorFromExams(id);
         professorRepository.delete(professor);
     }
 }
+
+
+
 
