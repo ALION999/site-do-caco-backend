@@ -5,6 +5,8 @@ import com.caco.sitedocaco.entity.enums.ExamType;
 import com.caco.sitedocaco.entity.exam.Exam;
 import com.caco.sitedocaco.entity.exam.Subject;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -20,6 +22,7 @@ public interface ExamRepository extends JpaRepository<Exam, UUID> {
     List<Exam> findByYear(Integer year);
     List<Exam> findByType(ExamType type);
     List<Exam> findBySubject(Subject subject);
+    Page<Exam> findBySubject(Subject subject, Pageable pageable);
     @Transactional
     @Modifying
     @Query("DELETE FROM Exam e WHERE e.subject.subjectCode = :subjectCode")

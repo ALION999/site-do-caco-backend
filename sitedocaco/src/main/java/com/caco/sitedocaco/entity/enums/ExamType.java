@@ -6,5 +6,6 @@ public enum ExamType {
     P3,
     EXAME,
     SUB,
+    TESTINHO,
     OUTROS
 }

@@ -7,10 +7,11 @@ import com.caco.sitedocaco.security.ratelimit.RateLimit;
 import com.caco.sitedocaco.service.ExamService;
 import com.caco.sitedocaco.service.SubjectService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/public/exams")
@@ -22,20 +23,22 @@ public class ExamController {
     private final ExamService examService;
 
     @GetMapping("/subjects")
-    public ResponseEntity<List<Subject>> getAllSubjects() {
-        List<Subject> subjects = subjectService.getAllSubjects();
+    public ResponseEntity<Page<Subject>> getAllSubjects(@PageableDefault(size = 20, sort = "name") Pageable pageable) {
+        Page<Subject> subjects = subjectService.getAllSubjects(pageable);
         return ResponseEntity.ok(subjects);
     }
 
-    @GetMapping("")
-    public ResponseEntity<List<Exam>> getAllExams() {
-        List<Exam> exams = examService.getAllExams();
+    @GetMapping
+    public ResponseEntity<Page<Exam>> getAllExams(@PageableDefault(size = 20, sort = "year") Pageable pageable) {
+        Page<Exam> exams = examService.getAllExams(pageable);
         return ResponseEntity.ok(exams);
     }
 
     @GetMapping("/subject/{subjectCode}")
-    public ResponseEntity<List<ExamWithoutSubjectDTO>> getExamsBySubject(@PathVariable String subjectCode) {
-        List<ExamWithoutSubjectDTO> exams = examService.getExamsBySubject(subjectCode);
+    public ResponseEntity<Page<ExamWithoutSubjectDTO>> getExamsBySubject(
+            @PathVariable String subjectCode,
+            @PageableDefault(size = 20, sort = "year") Pageable pageable) {
+        Page<ExamWithoutSubjectDTO> exams = examService.getExamsBySubject(subjectCode, pageable);
         return ResponseEntity.ok(exams);
     }
 }

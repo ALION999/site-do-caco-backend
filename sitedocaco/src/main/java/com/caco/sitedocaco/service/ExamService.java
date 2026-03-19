@@ -9,6 +9,8 @@ import com.caco.sitedocaco.entity.exam.Subject;
 import com.caco.sitedocaco.exception.ResourceNotFoundException;
 import com.caco.sitedocaco.repository.ExamRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,6 +49,11 @@ public class ExamService {
     }
 
     @Transactional(readOnly = true)
+    public Page<Exam> getAllExams(Pageable pageable) {
+        return examRepository.findAll(pageable);
+    }
+
+    @Transactional(readOnly = true)
     public Exam getExamById(UUID id) {
         return examRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Prova não encontrada"));
@@ -64,6 +71,18 @@ public class ExamService {
                         exam.getFileUrl()
                 ))
                 .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ExamWithoutSubjectDTO> getExamsBySubject(String subjectCode, Pageable pageable) {
+        Subject subject = subjectService.getSubjectByCode(subjectCode);
+        return examRepository.findBySubject(subject, pageable)
+                .map(exam -> new ExamWithoutSubjectDTO(
+                        exam.getId(),
+                        exam.getYear(),
+                        exam.getType(),
+                        exam.getFileUrl()
+                ));
     }
 
     @Transactional

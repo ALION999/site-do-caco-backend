@@ -7,6 +7,8 @@ import com.caco.sitedocaco.exception.ResourceNotFoundException;
 import com.caco.sitedocaco.repository.ExamRepository;
 import com.caco.sitedocaco.repository.SubjectRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +41,11 @@ public class SubjectService {
     @Transactional(readOnly = true)
     public List<Subject> getAllSubjects() {
         return subjectRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Subject> getAllSubjects(Pageable pageable) {
+        return subjectRepository.findAll(pageable);
     }
 
     @Transactional(readOnly = true)
