@@ -8,6 +8,8 @@ import com.caco.sitedocaco.exception.ResourceNotFoundException;
 import com.caco.sitedocaco.repository.ExamRepository;
 import com.caco.sitedocaco.repository.ProfessorRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +38,16 @@ public class ProfessorService {
     @Transactional(readOnly = true)
     public List<Professor> getAllProfessors() {
         return professorRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Professor> getAllProfessors(Pageable pageable) {
+        return professorRepository.findAll(pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Professor> searchProfessorsByName(String name, Pageable pageable) {
+        return professorRepository.findByNameContainingIgnoreCase(name, pageable);
     }
 
     @Transactional(readOnly = true)

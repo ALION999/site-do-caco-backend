@@ -19,6 +19,6 @@ public class Subject {
     @Column(nullable = false, unique = true)
     private String subjectCode;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
 }

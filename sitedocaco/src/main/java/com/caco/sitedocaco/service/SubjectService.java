@@ -27,10 +27,6 @@ public class SubjectService {
             throw new BusinessRuleException("Já existe uma disciplina com este código");
         }
 
-        if (subjectRepository.existsByName(dto.name())) {
-            throw new BusinessRuleException("Já existe uma disciplina com este nome");
-        }
-
         Subject subject = new Subject();
         subject.setSubjectCode(dto.subjectCode().toUpperCase().trim());
         subject.setName(dto.name().trim());

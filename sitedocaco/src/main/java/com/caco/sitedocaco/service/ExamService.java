@@ -54,6 +54,12 @@ public class ExamService {
     }
 
     @Transactional(readOnly = true)
+    public Page<Exam> getAllExams(Integer year, UUID professorId, String subjectCode, Pageable pageable) {
+        String normalizedSubjectCode = subjectCode == null ? null : subjectCode.trim().toUpperCase();
+        return examRepository.findAllWithFilters(year, professorId, normalizedSubjectCode, pageable);
+    }
+
+    @Transactional(readOnly = true)
     public Exam getExamById(UUID id) {
         return examRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Prova não encontrada"));
@@ -132,5 +138,10 @@ public class ExamService {
                         exam.getFileUrl()
                 ))
                 .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<Integer> getAllAvailableYears() {
+        return examRepository.findAllDistinctYears();
     }
 }

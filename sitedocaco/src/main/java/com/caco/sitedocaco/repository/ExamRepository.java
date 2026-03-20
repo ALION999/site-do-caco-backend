@@ -23,6 +23,24 @@ public interface ExamRepository extends JpaRepository<Exam, UUID> {
     List<Exam> findByType(ExamType type);
     List<Exam> findBySubject(Subject subject);
     Page<Exam> findBySubject(Subject subject, Pageable pageable);
+
+    @Query("""
+            SELECT e
+            FROM Exam e
+            WHERE (:year IS NULL OR e.year = :year)
+              AND (:professorId IS NULL OR e.professor.id = :professorId)
+              AND (:subjectCode IS NULL OR UPPER(e.subject.subjectCode) = UPPER(:subjectCode))
+            """)
+    Page<Exam> findAllWithFilters(
+            @Param("year") Integer year,
+            @Param("professorId") UUID professorId,
+            @Param("subjectCode") String subjectCode,
+            Pageable pageable
+    );
+
+    @Query("SELECT DISTINCT e.year FROM Exam e WHERE e.year IS NOT NULL ORDER BY e.year DESC")
+    List<Integer> findAllDistinctYears();
+
     @Transactional
     @Modifying
     @Query("DELETE FROM Exam e WHERE e.subject.subjectCode = :subjectCode")

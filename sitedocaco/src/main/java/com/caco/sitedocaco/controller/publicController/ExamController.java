@@ -7,11 +7,16 @@ import com.caco.sitedocaco.security.ratelimit.RateLimit;
 import com.caco.sitedocaco.service.ExamService;
 import com.caco.sitedocaco.service.SubjectService;
 import lombok.RequiredArgsConstructor;
+import com.caco.sitedocaco.service.ProfessorService;
+import com.caco.sitedocaco.entity.exam.Professor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/public/exams")
@@ -21,6 +26,7 @@ public class ExamController {
 
     private final SubjectService subjectService;
     private final ExamService examService;
+    private final ProfessorService professorService;
 
     @GetMapping("/subjects")
     public ResponseEntity<Page<Subject>> getAllSubjects(@PageableDefault(size = 20, sort = "name") Pageable pageable) {
@@ -28,9 +34,19 @@ public class ExamController {
         return ResponseEntity.ok(subjects);
     }
 
+    @GetMapping("/subjects/all")
+    public ResponseEntity<List<Subject>> getAllSubjectsWithoutPagination() {
+        List<Subject> subjects = subjectService.getAllSubjects();
+        return ResponseEntity.ok(subjects);
+    }
+
     @GetMapping
-    public ResponseEntity<Page<Exam>> getAllExams(@PageableDefault(size = 20, sort = "year") Pageable pageable) {
-        Page<Exam> exams = examService.getAllExams(pageable);
+    public ResponseEntity<Page<Exam>> getAllExams(
+            @RequestParam(required = false) Integer year,
+            @RequestParam(required = false) UUID professorId,
+            @RequestParam(required = false) String subjectCode,
+            @PageableDefault(size = 20, sort = "year") Pageable pageable) {
+        Page<Exam> exams = examService.getAllExams(year, professorId, subjectCode, pageable);
         return ResponseEntity.ok(exams);
     }
 
@@ -40,5 +56,21 @@ public class ExamController {
             @PageableDefault(size = 20, sort = "year") Pageable pageable) {
         Page<ExamWithoutSubjectDTO> exams = examService.getExamsBySubject(subjectCode, pageable);
         return ResponseEntity.ok(exams);
+    }
+
+    @GetMapping("/years")
+    public ResponseEntity<List<Integer>> getAllAvailableYears() {
+        List<Integer> years = examService.getAllAvailableYears();
+        return ResponseEntity.ok(years);
+    }
+
+    @GetMapping("/professors")
+    public ResponseEntity<Page<Professor>> getAllProfessors(
+            @RequestParam(required = false) String name,
+            @PageableDefault(size = 20, sort = "name") Pageable pageable) {
+        Page<Professor> professors = (name == null || name.isBlank())
+                ? professorService.getAllProfessors(pageable)
+                : professorService.searchProfessorsByName(name, pageable);
+        return ResponseEntity.ok(professors);
     }
 }
